@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Círculo — Fios de Gaspar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --ink:#241F1C;
+            --ink-soft:#4a423c;
+            --linen:#F2E9DC;
+            --linen-deep:#E7DAC3;
+            --linen-card:#FBF7EF;
+            --thread-red:#B23A2C;
+            --thread-teal:#2B6B5E;
+            --thread-gold:#D9A441;
+            --thread-plum:#6C3F5E;
+            --thread-blue:#35577A;
+            --thread-rust:#C4652C;
+
+            --font-display:'Fraunces', serif;
+            --font-body:'Inter', sans-serif;
+            --font-utility:'Space Grotesk', sans-serif;
+
+            --max: 1180px;
+            --edge: clamp(20px, 5vw, 64px);
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{
+            background:var(--linen);
+            color:var(--ink);
+            font-family:var(--font-body);
+            line-height:1.5;
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+        img,svg{display:block;max-width:100%;}
+        a{color:inherit;text-decoration:none;}
+        ul{list-style:none;}
+        button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+        input{font:inherit;}
+
+        .wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--edge);}
+        .eyebrow{
+            font-family:var(--font-utility);
+            font-size:.78rem;
+            letter-spacing:.14em;
+            text-transform:uppercase;
+            font-weight:600;
+            color:var(--thread-rust);
+            display:flex;align-items:center;gap:.6em;
+        }
+        .eyebrow::before{
+            content:"";
+            width:22px;height:1px;
+            background:var(--thread-rust);
+            display:inline-block;
+        }
+
+        h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.06;color:var(--ink);}
+
+        @media (prefers-reduced-motion: reduce){
+            *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+        }
+
+        /* ---------- HEADER ---------- */
+        header{
+            position:sticky;top:0;z-index:100;
+            background:rgba(242,233,220,.86);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid rgba(36,31,28,.08);
+        }
+        .nav{
+            display:flex;align-items:center;justify-content:space-between;
+            padding-block:16px;
+        }
+        .logo{
+            display:flex;align-items:center;gap:.6em;
+            font-family:var(--font-display);
+            font-size:1.35rem;
+            font-weight:600;
+            letter-spacing:.01em;
+        }
+        .logo-mark{
+            width:30px;height:30px;border-radius:50%;
+            background:conic-gradient(from 20deg, var(--thread-red), var(--thread-gold), var(--thread-teal), var(--thread-plum), var(--thread-blue), var(--thread-red));
+            box-shadow:inset 0 0 0 6px var(--linen);
+            flex-shrink:0;
+        }
+        .nav-links{display:flex;gap:2.4rem;font-family:var(--font-utility);font-size:.92rem;font-weight:500;}
+        .nav-links a{position:relative;padding-block:.2rem;}
+        .nav-links a::after{
+            content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;
+            background:var(--ink);transform:scaleX(0);transform-origin:right;
+            transition:transform .28s ease;
+        }
+        .nav-links a:hover::after{transform:scaleX(1);transform-origin:left;}
+        .nav-cta{
+            font-family:var(--font-utility);font-size:.85rem;font-weight:600;
+            padding:.7rem 1.3rem;border-radius:100px;
+            background:var(--ink);color:var(--linen);
+            letter-spacing:.02em;
+            transition:background .25s ease, transform .25s ease;
+            white-space:nowrap;
+        }
+        .nav-cta:hover{background:var(--thread-rust);transform:translateY(-1px);}
+        .nav-toggle{display:none;font-size:1.6rem;background:none;}
+
+        @media (max-width:860px){
+            .nav-links{display:none;}
+            .nav-toggle{display:block;}
+        }
+
+        /* ---------- HERO ---------- */
+        .hero{
+            padding-block:clamp(50px, 8vw, 96px) clamp(60px, 10vw, 120px);
+            position:relative;
+        }
+        .hero-grid{
+            display:grid;
+            grid-template-columns:1.05fr .95fr;
+            gap:clamp(2rem, 6vw, 5rem);
+            align-items:center;
+        }
+        .hero h1{
+            font-size:clamp(2.6rem, 5.6vw, 4.4rem);
+            margin-block:1.1rem .9rem;
+            max-width:11ch;
+        }
+        .hero h1 em{
+            font-style:italic;
+            font-weight:400;
+            color:var(--thread-teal);
+        }
+        .hero p{
+            font-size:1.08rem;
+            color:var(--ink-soft);
+            max-width:42ch;
+            margin-bottom:2.1rem;
+        }
+        .hero-actions{display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap;}
+        .btn-primary{
+            font-family:var(--font-utility);font-weight:600;font-size:.92rem;
+            padding:.95rem 1.8rem;border-radius:100px;
+            background:var(--thread-rust);color:var(--linen-card);
+            display:inline-flex;align-items:center;gap:.5em;
+            transition:transform .25s ease, box-shadow .25s ease;
+            box-shadow:0 6px 18px -8px rgba(196,101,44,.6);
+        }
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(196,101,44,.7);}
+        .btn-text{
+            font-family:var(--font-utility);font-weight:600;font-size:.92rem;
+            display:inline-flex;align-items:center;gap:.5em;
+            border-bottom:1px solid var(--ink);
+            padding-bottom:.15em;
+        }
+
+        /* wheel */
+        .wheel-wrap{
+            position:relative;
+            aspect-ratio:1/1;
+            display:flex;align-items:center;justify-content:center;
+            max-width:440px;margin-inline:auto;
+        }
+        .wheel-ring-outer{
+            position:absolute;inset:0;
+            border-radius:50%;
+            border:1.5px dashed rgba(36,31,28,.28);
+            animation:spin 60s linear infinite;
+        }
+        .wheel{
+            width:78%;height:78%;
+            border-radius:50%;
+            background:conic-gradient(
+                    from 0deg,
+                    var(--thread-red) 0deg 40deg,
+                    var(--thread-gold) 40deg 90deg,
+                    var(--thread-teal) 90deg 150deg,
+                    var(--thread-blue) 150deg 210deg,
+                    var(--thread-plum) 210deg 260deg,
+                    var(--thread-rust) 260deg 320deg,
+                    var(--thread-red) 320deg 360deg
+            );
+            box-shadow:0 30px 60px -20px rgba(36,31,28,.35);
+            animation:spin 38s linear infinite;
+            display:flex;align-items:center;justify-content:center;
+            position:relative;
+        }
+        .wheel::before{
+            content:"";
+            position:absolute;inset:0;border-radius:50%;
+            box-shadow:inset 0 0 0 22px var(--linen);
+        }
+        .wheel-core{
+            position:relative;z-index:2;
+            width:56%;height:56%;
+            border-radius:50%;
+            background:var(--linen-card);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            text-align:center;
+            box-shadow:0 8px 30px -10px rgba(36,31,28,.25);
+            animation:spin-reverse 38s linear infinite;
+        }
+        .wheel-core span{font-family:var(--font-utility);font-size:.68rem;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase;}
+        .wheel-core strong{font-family:var(--font-display);font-size:1.3rem;font-weight:600;margin-top:.15rem;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        @keyframes spin-reverse{to{transform:rotate(-360deg);}}
+
+        .wheel-caption{
+            text-align:center;font-family:var(--font-utility);
+            font-size:.82rem;color:var(--ink-soft);
+            margin-top:1.4rem;letter-spacing:.02em;
+        }
+
+        @media (max-width:860px){
+            .hero-grid{grid-template-columns:1fr;text-align:left;}
+        }
+
+        /* ---------- SECTION SPACING ---------- */
+        section{padding-block:clamp(60px, 9vw, 110px);}
+        .section-head{
+            display:flex;justify-content:space-between;align-items:flex-end;
+            gap:2rem;flex-wrap:wrap;
+            margin-bottom:clamp(2.4rem, 5vw, 3.6rem);
+        }
+        .section-head h2{font-size:clamp(2rem, 3.6vw, 2.9rem);margin-top:.7rem;max-width:16ch;}
+        .section-head p{max-width:34ch;color:var(--ink-soft);font-size:.98rem;}
+
+        /* ---------- COLEÇÕES ---------- */
+        .colecoes{background:var(--linen-deep);}
+        .col-grid{
+            display:grid;
+            grid-template-columns:repeat(4, 1fr);
+            gap:1.4rem;
+        }
+        .col-card{
+            background:var(--linen-card);
+            border-radius:18px;
+            overflow:hidden;
+            transition:transform .3s ease, box-shadow .3s ease;
+            display:flex;flex-direction:column;
+        }
+        .col-card:hover{transform:translateY(-6px);box-shadow:0 20px 34px -18px rgba(36,31,28,.35);}
+        .col-swatch{
+            height:150px;position:relative;overflow:hidden;
+        }
+        .col-swatch::after{
+            content:"";position:absolute;inset:0;
+            background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.16) 0 2px, transparent 2px 9px);
+        }
+        .swatch-1{background:linear-gradient(135deg, var(--thread-red), var(--thread-rust));}
+        .swatch-2{background:linear-gradient(135deg, var(--thread-teal), #4f8f7f);}
+        .swatch-3{background:linear-gradient(135deg, var(--thread-gold), #e8c27a);}
+        .swatch-4{background:linear-gradient(135deg, var(--thread-plum), var(--thread-blue));}
+        .col-body{padding:1.5rem 1.4rem 1.7rem;flex:1;display:flex;flex-direction:column;}
+        .col-body h3{font-size:1.28rem;margin-bottom:.55rem;}
+        .col-body p{font-size:.92rem;color:var(--ink-soft);flex:1;margin-bottom:1.1rem;}
+        .col-link{
+            font-family:var(--font-utility);font-size:.82rem;font-weight:600;
+            display:inline-flex;align-items:center;gap:.4em;
+        }
+        .col-link svg{width:14px;height:14px;transition:transform .25s ease;}
+        .col-card:hover .col-link svg{transform:translateX(4px);}
+
+        @media (max-width:960px){.col-grid{grid-template-columns:repeat(2,1fr);}}
+        @media (max-width:560px){.col-grid{grid-template-columns:1fr;}}
+
+        /* ---------- PROCESSO ---------- */
+        .processo-grid{
+            display:grid;
+            grid-template-columns:repeat(4, 1fr);
+            gap:1.2rem;
+        }
+        .step{
+            padding:1.8rem 1.5rem;
+            border-top:1px solid rgba(36,31,28,.18);
+            position:relative;
+        }
+        .step-num{
+            font-family:var(--font-display);
+            font-style:italic;
+            font-size:1.5rem;
+            color:var(--thread-rust);
+            margin-bottom:.9rem;
+            display:block;
+        }
+        .step h3{font-size:1.15rem;margin-bottom:.55rem;}
+        .step p{font-size:.9rem;color:var(--ink-soft);}
+
+        @media (max-width:860px){.processo-grid{grid-template-columns:repeat(2,1fr);}}
+        @media (max-width:560px){.processo-grid{grid-template-columns:1fr;}}
+
+        /* ---------- COMUNIDADE ---------- */
+        .comunidade{background:var(--ink);color:var(--linen);}
+        .comunidade .eyebrow{color:var(--thread-gold);}
+        .comunidade .eyebrow::before{background:var(--thread-gold);}
+        .comunidade .section-head h2{color:var(--linen);}
+        .comunidade .section-head p{color:rgba(242,233,220,.7);}
+        .quote-grid{
+            display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;
+        }
+        .quote-card{
+            background:rgba(242,233,220,.06);
+            border:1px solid rgba(242,233,220,.14);
+            border-radius:18px;
+            padding:2rem 1.7rem;
+            display:flex;flex-direction:column;
+            justify-content:space-between;
+            min-height:260px;
+        }
+        .quote-mark{
+            font-family:var(--font-display);
+            font-size:2.8rem;
+            color:var(--thread-gold);
+            line-height:1;
+            margin-bottom:.6rem;
+        }
+        .quote-card p{font-size:1rem;line-height:1.55;color:rgba(242,233,220,.92);}
+        .quote-who{
+            margin-top:1.6rem;display:flex;align-items:center;gap:.7rem;
+        }
+        .avatar-dot{width:34px;height:34px;border-radius:50%;flex-shrink:0;}
+        .quote-who strong{font-family:var(--font-utility);font-size:.88rem;display:block;}
+        .quote-who span{font-size:.8rem;color:rgba(242,233,220,.6);}
+
+        @media (max-width:860px){.quote-grid{grid-template-columns:1fr;}}
+
+        /* ---------- LOJAS / CTA ---------- */
+        .cta-band{
+            background:var(--linen-card);
+            border-radius:26px;
+            padding:clamp(2.4rem, 5vw, 4rem);
+            display:flex;align-items:center;justify-content:space-between;
+            gap:2rem;flex-wrap:wrap;
+            position:relative;overflow:hidden;
+        }
+        .cta-band::before{
+            content:"";position:absolute;right:-60px;top:50%;translate:0 -50%;
+            width:220px;height:220px;border-radius:50%;
+            background:conic-gradient(from 40deg, var(--thread-red), var(--thread-gold), var(--thread-teal), var(--thread-plum), var(--thread-red));
+            opacity:.16;
+        }
+        .cta-band h2{font-size:clamp(1.8rem, 3.4vw, 2.5rem);max-width:14ch;position:relative;}
+        .cta-band p{color:var(--ink-soft);max-width:34ch;margin-top:.7rem;position:relative;}
+        .cta-actions{display:flex;gap:1rem;flex-wrap:wrap;position:relative;}
+        .btn-outline{
+            font-family:var(--font-utility);font-weight:600;font-size:.88rem;
+            padding:.9rem 1.6rem;border-radius:100px;
+            border:1.5px solid var(--ink);
+            transition:background .25s ease, color .25s ease;
+        }
+        .btn-outline:hover{background:var(--ink);color:var(--linen);}
+
+        /* ---------- FOOTER ---------- */
+        footer{background:var(--ink);color:rgba(242,233,220,.72);padding-block:3.5rem 2rem;}
+        .footer-grid{
+            display:grid;grid-template-columns:1.4fr repeat(3, .8fr);gap:2.5rem;
+            padding-bottom:2.6rem;border-bottom:1px solid rgba(242,233,220,.12);
+        }
+        .footer-brand .logo{color:var(--linen);}
+        .footer-brand p{margin-top:1rem;font-size:.9rem;max-width:32ch;color:rgba(242,233,220,.6);}
+        .footer-col h4{
+            font-family:var(--font-utility);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+            color:rgba(242,233,220,.5);margin-bottom:1rem;
+        }
+        .footer-col ul{display:flex;flex-direction:column;gap:.65rem;font-size:.9rem;}
+        .footer-col a:hover{color:var(--linen);}
+        .footer-bottom{
+            display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+            padding-top:1.6rem;font-size:.8rem;color:rgba(242,233,220,.45);
+        }
+        .footer-note{font-size:.76rem;color:rgba(242,233,220,.35);max-width:52ch;line-height:1.5;}
+
+        @media (max-width:760px){
+            .footer-grid{grid-template-columns:1fr 1fr;}
+            .cta-band{flex-direction:column;align-items:flex-start;}
+        }
+
+        /* reveal on scroll */
+        .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+        .reveal.in{opacity:1;transform:translateY(0);}
+
+        :focus-visible{outline:2px solid var(--thread-rust);outline-offset:3px;}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="wrap nav">
+        <a href="#" class="logo"><span class="logo-mark"></span>Círculo</a>
+        <nav class="nav-links">
+            <a href="#colecoes">Coleções</a>
+            <a href="#processo">Processo</a>
+            <a href="#comunidade">Comunidade</a>
+            <a href="#lojas">Lojas</a>
+        </nav>
+        <a href="#lojas" class="nav-cta">Encontrar loja</a>
+        <button class="nav-toggle" aria-label="Abrir menu">☰</button>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="wrap hero-grid">
+        <div>
+            <div class="eyebrow">Fios de Gaspar · Santa Catarina</div>
+            <h1>Todo fio<br>começa em <em>círculo</em>.</h1>
+            <p>Fiamos, tingimos e torcemos linhas para quem transforma tempo em textura — tricô, crochê, amigurumi e tudo que nasce entre os dedos e a agulha.</p>
+            <div class="hero-actions">
+                <a href="#colecoes" class="btn-primary">
+                    Ver coleções
+                    <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#processo" class="btn-text">Como fazemos</a>
+            </div>
+        </div>
+        <div>
+            <div class="wheel-wrap">
+                <div class="wheel-ring-outer"></div>
+                <div class="wheel">
+                    <div class="wheel-core">
+                        <span>Novelo nº</span>
+                        <strong>001</strong>
+                    </div>
+                </div>
+            </div>
+            <p class="wheel-caption">Uma cor para cada ponto.</p>
+        </div>
+    </div>
+</section>
+
+<section class="colecoes" id="colecoes">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div>
+                <div class="eyebrow">Coleções</div>
+                <h2>Uma linha para cada ideia</h2>
+            </div>
+            <p>Da malha leve de verão à lã encorpada de inverno — cada coleção nasce de um jeito diferente de criar.</p>
+        </div>
+        <div class="col-grid">
+            <div class="col-card reveal">
+                <div class="col-swatch swatch-1"></div>
+                <div class="col-body">
+                    <h3>Amigurumi</h3>
+                    <p>Fio encorpado e cores vivas, feito para bonecos e personagens que ganham forma nas mãos de quem cria.</p>
+                    <a href="#" class="col-link">Explorar linha <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+            <div class="col-card reveal">
+                <div class="col-swatch swatch-2"></div>
+                <div class="col-body">
+                    <h3>Algodão</h3>
+                    <p>Toque macio e fresco, ideal para peças de verão, panos de prato e roupinhas de bebê.</p>
+                    <a href="#" class="col-link">Explorar linha <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+            <div class="col-card reveal">
+                <div class="col-swatch swatch-3"></div>
+                <div class="col-body">
+                    <h3>Lã Premium</h3>
+                    <p>Fibra quente e envolvente, pensada para tricôs quentes que aquecem o inverno inteiro.</p>
+                    <a href="#" class="col-link">Explorar linha <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+            <div class="col-card reveal">
+                <div class="col-swatch swatch-4"></div>
+                <div class="col-body">
+                    <h3>Especiais</h3>
+                    <p>Efeitos metálicos, mesclas e texturas para dar personalidade única a qualquer peça.</p>
+                    <a href="#" class="col-link">Explorar linha <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="processo">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div>
+                <div class="eyebrow">Como nasce um fio</div>
+                <h2>Da fibra ao novelo</h2>
+            </div>
+            <p>Quatro etapas, sempre na mesma ordem, para que cada novelo saia igual ao anterior — e diferente de qualquer outro.</p>
+        </div>
+        <div class="processo-grid">
+            <div class="step reveal">
+                <span class="step-num">01</span>
+                <h3>Fiação</h3>
+                <p>As fibras são alinhadas e torcidas até virarem um fio contínuo e resistente.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step-num">02</span>
+                <h3>Tingimento</h3>
+                <p>Cada lote passa por banhos de cor controlados, até chegar no tom exato da coleção.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step-num">03</span>
+                <h3>Torção</h3>
+                <p>Os fios se entrelaçam entre si, ganhando corpo, textura e a resistência certa para cada ponto.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step-num">04</span>
+                <h3>Novelagem</h3>
+                <p>O fio é enrolado em novelos prontos para viajar da fábrica até a sua sacola de trabalho.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="comunidade" id="comunidade">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <div>
+                <div class="eyebrow">Feito à mão</div>
+                <h2>O que se cria com nossos fios</h2>
+            </div>
+            <p>Histórias reais de quem transforma novelo em presente, em renda e em memória.</p>
+        </div>
+        <div class="quote-grid">
+            <div class="quote-card reveal">
+                <div>
+                    <span class="quote-mark">"</span>
+                    <p>Comecei fazendo amigurumi para vender no fim de semana. Hoje é o que paga minhas contas — e ainda me diverte todo dia.</p>
+                </div>
+                <div class="quote-who">
+                    <div class="avatar-dot swatch-1"></div>
+                    <div><strong>Marisa T.</strong><span>Crocheteira, Blumenau</span></div>
+                </div>
+            </div>
+            <div class="quote-card reveal">
+                <div>
+                    <span class="quote-mark">"</span>
+                    <p>A textura da lã premium muda tudo. Meus tricôs de inverno duram anos e ainda ficam com aquela cara de feito à mão.</p>
+                </div>
+                <div class="quote-who">
+                    <div class="avatar-dot swatch-3"></div>
+                    <div><strong>João P.</strong><span>Tricô, Curitiba</span></div>
+                </div>
+            </div>
+            <div class="quote-card reveal">
+                <div>
+                    <span class="quote-mark">"</span>
+                    <p>Ensino crochê para iniciantes e sempre recomendo o algodão. É macio o suficiente pra não machucar as mãos de quem tá aprendendo.</p>
+                </div>
+                <div class="quote-who">
+                    <div class="avatar-dot swatch-2"></div>
+                    <div><strong>Renata A.</strong><span>Professora de artesanato, Gaspar</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="lojas">
+    <div class="wrap">
+        <div class="cta-band reveal">
+            <div>
+                <h2>Perto de você tem uma loja com nossos fios.</h2>
+                <p>Encontre revendedores autorizados ou baixe o catálogo completo da coleção atual.</p>
+            </div>
+            <div class="cta-actions">
+                <a href="#" class="btn-primary">Encontrar loja</a>
+                <a href="#" class="btn-outline">Baixar catálogo</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo"><span class="logo-mark"></span>Círculo</a>
+                <p>Linhas e fios feitos em Gaspar, Santa Catarina, para quem cria com as próprias mãos.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Coleções</h4>
+                <ul>
+                    <li><a href="#colecoes">Amigurumi</a></li>
+                    <li><a href="#colecoes">Algodão</a></li>
+                    <li><a href="#colecoes">Lã Premium</a></li>
+                    <li><a href="#colecoes">Especiais</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="#processo">Processo</a></li>
+                    <li><a href="#comunidade">Comunidade</a></li>
+                    <li><a href="#lojas">Lojas parceiras</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Siga</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Círculo. Todos os direitos reservados.</span>
+            <span class="footer-note">Template de landing page ilustrativo, criado como exercício de design — não é o site oficial de nenhuma empresa real.</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+
+    // mobile nav toggle (simple show/hide of links as a stacked list)
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+        const open = links.style.display === 'flex';
+        links.style.display = open ? 'none' : 'flex';
+        links.style.flexDirection = 'column';
+        links.style.position = 'absolute';
+        links.style.top = '64px';
+        links.style.left = '0';
+        links.style.right = '0';
+        links.style.background = 'var(--linen)';
+        links.style.padding = '1.4rem var(--edge)';
+        links.style.gap = '1.2rem';
+        links.style.borderBottom = '1px solid rgba(36,31,28,.1)';
+    });
+</script>
+
+</body>
+</html>
